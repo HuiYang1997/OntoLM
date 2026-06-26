@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OntoLM | ISWC 2026 Tutorial</title>
+  <meta name="description" content="OntoLM: Ontology Embedding, Reasoning and Construction with Language Models. A half-day ISWC 2026 tutorial.">
+  <style>
+    :root {
+      --ink: #1d2420;
+      --muted: #5e6862;
+      --soft: #eef1ee;
+      --line: #d8ddd9;
+      --paper: #ffffff;
+      --tint: #f7f8f6;
+      --accent: #23463c;
+      --max: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.62;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .page {
+      width: min(100% - 56px, var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .nav {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .brand {
+      color: var(--ink);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      margin-left: 8px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: .95rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .hero {
+      padding: 58px 0 54px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 58px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 4.2rem;
+      line-height: 1.03;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin-bottom: 24px;
+      color: var(--ink);
+      font-size: 1.35rem;
+      line-height: 1.45;
+    }
+
+    .abstract {
+      max-width: 820px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .fact-box {
+      border-top: 3px solid var(--accent);
+      background: var(--tint);
+      padding: 24px;
+    }
+
+    .fact-box h2 {
+      margin-bottom: 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.45rem;
+      font-weight: 500;
+    }
+
+    .facts {
+      margin: 0;
+    }
+
+    .facts div {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 12px;
+      padding: 11px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .facts dt {
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .facts dd {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    section {
+      padding: 54px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-of-type {
+      border-bottom: 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 42px;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.15rem;
+      line-height: 1.15;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 36px;
+    }
+
+    .list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .list li {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .list strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .list span,
+    .speaker p,
+    .material p {
+      color: var(--muted);
+    }
+
+    .resource-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .resource-list li {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 20px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .resource-list strong {
+      font-weight: 700;
+    }
+
+    .resource-list span {
+      color: var(--muted);
+    }
+
+    .inline-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+    }
+
+    .program {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .96rem;
+    }
+
+    .program th,
+    .program td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .program th {
+      color: var(--muted);
+      background: var(--tint);
+      font-size: .78rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .program .part td {
+      padding-top: 18px;
+      color: var(--accent);
+      background: var(--soft);
+      font-weight: 700;
+    }
+
+    .program .break td {
+      color: var(--muted);
+      background: #fbfbfa;
+      font-style: italic;
+    }
+
+    .speaker-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+    }
+
+    .speaker {
+      padding-top: 18px;
+      border-top: 1px solid var(--ink);
+    }
+
+    h3 {
+      margin-bottom: 5px;
+      font-size: 1.12rem;
+      line-height: 1.3;
+    }
+
+    .affiliation {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .materials {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 36px;
+    }
+
+    .material {
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer {
+      padding: 32px 0 44px;
+      color: var(--muted);
+      font-size: .92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        width: min(100% - 32px, var(--max));
+      }
+
+      .nav,
+      .hero-grid,
+      .section-head,
+      .two-col,
+      .speaker-grid,
+      .materials {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        height: auto;
+        padding: 16px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+      }
+
+      h1 {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="page nav" aria-label="Primary navigation">
+      <a class="brand" href="#top">OntoLM <span>ISWC 2026 Tutorial</span></a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#program">Program</a>
+        <a href="#audience">Audience</a>
+        <a href="#presenters">Presenters</a>
+        <a href="#materials">Materials</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="page">
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Half-day tutorial · International Semantic Web Conference 2026</p>
+          <h1 id="title">OntoLM</h1>
+          <p class="subtitle">Ontology Embedding, Reasoning and Construction with Language Models</p>
+          <p class="abstract">This tutorial introduces recent work connecting OWL ontologies, ontology embeddings, and language models. It focuses on practical methods for ontology completion, inference, reasoning, alignment, and construction, with lectures, worked examples, notebook-based resources, and discussion.</p>
+        </div>
+        <aside class="fact-box" aria-labelledby="facts-title">
+          <h2 id="facts-title">Tutorial Facts</h2>
+          <dl class="facts">
+            <div><dt>Format</dt><dd>Half-day, onsite</dd></div>
+            <div><dt>Level</dt><dd>Specific / advanced</dd></div>
+            <div><dt>Length</dt><dd>200 mins + break</dd></div>
+            <div><dt>Audience</dt><dd>Semantic Web, KRR, KE, NLP, ML</dd></div>
+            <div><dt>Presenters</dt><dd>Hui Yang, Jiaoyan Chen, Hang Dong</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section id="overview" aria-labelledby="overview-title">
+      <div class="section-head">
+        <h2 id="overview-title">Overview</h2>
+        <p class="lead">OWL ontologies provide precise semantics and reliable symbolic reasoning. In real-world settings, however, knowledge is often incomplete, uncertain, noisy, and expensive to model manually. OntoLM presents machine learning and language model methods that address these limitations while keeping ontology structure central.</p>
+      </div>
+      <div class="two-col">
+        <ul class="list">
+          <li><strong>Ontology embeddings</strong><span>Geometric and LM-based representations that encode logical and textual information for completion and inference.</span></li>
+          <li><strong>Reasoning with LMs</strong><span>Deductive and abductive reasoning over OWL ontologies, including proof generation with large language models.</span></li>
+        </ul>
+        <ul class="list">
+          <li><strong>Ontology construction</strong><span>Alignment, subsumption prediction, and new concept placement supported by models and practical toolkits.</span></li>
+          <li><strong>Practical resources</strong><span>Worked examples, reading materials, notebooks, DeepOnto resources, and interactive discussion.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="program" aria-labelledby="program-title">
+      <div class="section-head">
+        <h2 id="program-title">Program</h2>
+        <p class="lead">The tutorial is organized into two self-contained parts: ontology embeddings, followed by ontology reasoning and construction.</p>
+      </div>
+      <table class="program">
+        <thead>
+          <tr>
+            <th>Block</th>
+            <th>Length</th>
+            <th>Content</th>
+            <th>Speaker</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="part"><td colspan="4">Part I - Ontology Embeddings</td></tr>
+          <tr><td>1</td><td>15 mins</td><td>Introduction and roadmap</td><td>Jiaoyan Chen</td></tr>
+          <tr><td>2</td><td>40 mins</td><td>Geometric embeddings: from hierarchies to axioms</td><td>Hui Yang</td></tr>
+          <tr><td>3</td><td>40 mins</td><td>Language model-based embeddings</td><td>Hui Yang</td></tr>
+          <tr><td>4</td><td>5 mins</td><td>Q&amp;A and discussion</td><td>All</td></tr>
+          <tr class="break"><td colspan="4">30 mins - Conference break</td></tr>
+          <tr class="part"><td colspan="4">Part II - Ontology Reasoning and Construction</td></tr>
+          <tr><td>5</td><td>30 mins</td><td>Complex ontology reasoning with LLMs</td><td>Hui Yang</td></tr>
+          <tr><td>6</td><td>30 mins</td><td>Ontology alignment with DeepOnto</td><td>Jiaoyan Chen</td></tr>
+          <tr><td>7</td><td>30 mins</td><td>New concept placement in ontologies</td><td>Hang Dong</td></tr>
+          <tr><td>8</td><td>10 mins</td><td>Summary, open challenges and discussion</td><td>Jiaoyan Chen</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="audience" aria-labelledby="audience-title">
+      <div class="section-head">
+        <h2 id="audience-title">Audience</h2>
+        <p class="lead">The tutorial is intended for researchers and practitioners from the Semantic Web and related AI communities, especially knowledge representation and reasoning, knowledge engineering, NLP, language models, and machine learning. Expected attendance is 30-60 participants.</p>
+      </div>
+      <div class="two-col">
+        <ul class="list">
+          <li><strong>Prerequisites</strong><span>Foundations of ontologies, including the Web Ontology Language, plus basic knowledge of machine learning and language models.</span></li>
+          <li><strong>Learning outcome</strong><span>A clear understanding of ontology embedding algorithms and how they support reasoning and construction with LMs.</span></li>
+        </ul>
+        <ul class="list">
+          <li><strong>Methods covered</strong><span>RegD, OnT, LLM4Proof, BERTMap, BERTSubs, ICON, DeepOnto, and related recent work.</span></li>
+          <li><strong>Practical benefit</strong><span>Participants will learn how to use and adapt frameworks such as <a href="https://github.com/KRR-Oxford/DeepOnto">DeepOnto</a> and <a href="https://github.com/HuiYang1997/OnT">OnT</a> for ontology tasks.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="presenters" aria-labelledby="presenters-title">
+      <div class="section-head">
+        <h2 id="presenters-title">Presenters</h2>
+        <p class="lead">The tutorial is presented by researchers working at the intersection of ontologies, knowledge graphs, language models, and machine learning.</p>
+      </div>
+      <div class="speaker-grid">
+        <article class="speaker">
+          <h3>Hui Yang</h3>
+          <p class="affiliation">The University of Manchester</p>
+          <p>Postdoctoral researcher working on ontology embeddings, their combination with LMs, and ontology reasoning tasks. Hui will lead the sessions on geometric embeddings, LM-based embeddings, and complex ontology reasoning.</p>
+        </article>
+        <article class="speaker">
+          <h3>Jiaoyan Chen</h3>
+          <p class="affiliation">The University of Manchester</p>
+          <p>Senior Lecturer in Computer Science with extensive work on knowledge graphs, ontologies, and machine learning, including teaching and tutorial experience at ISWC and IJCAI.</p>
+        </article>
+        <article class="speaker">
+          <h3>Hang Dong</h3>
+          <p class="affiliation">The University of Exeter</p>
+          <p>Lecturer in Computer Science working on knowledge graphs, NLP, language models, and health informatics. Hang will lead the session on new concept placement in ontologies.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="materials" aria-labelledby="materials-title">
+      <div class="section-head">
+        <h2 id="materials-title">Materials</h2>
+        <p class="lead">Slides, reading lists, code, datasets, notebooks, and a DeepOnto tutorial will be released openly according to the ISWC 2026 schedule.</p>
+      </div>
+      <div class="materials">
+        <div class="material">
+          <h3>Open resources</h3>
+          <p>The tutorial website will collect reading lists, slides, code repositories, datasets, and notebook-based demonstrations for ontology embedding and construction tasks. Current open-source resources include <a href="https://github.com/KRR-Oxford/DeepOnto">DeepOnto</a>, <a href="https://github.com/HuiYang1997/OnT">OnT</a>, <a href="https://github.com/HuiYang1997/LLMOwlR">LLM4Proof</a>, and <a href="https://github.com/KRR-Oxford/OWL2Vec-Star">OWL2Vec*</a>.</p>
+        </div>
+        <div class="material">
+          <h3>DeepOnto and OnT</h3>
+          <p>Planned materials include a comprehensive <a href="https://github.com/KRR-Oxford/DeepOnto">DeepOnto</a> tutorial and Python notebooks demonstrating <a href="https://github.com/HuiYang1997/OnT">OnT</a>. A survey paper will be linked when available.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" aria-labelledby="resources-title">
+      <div class="section-head">
+        <h2 id="resources-title">Related Links</h2>
+        <p class="lead">A compact list of papers and open-source projects corresponding to the main methods discussed in the tutorial.</p>
+      </div>
+      <ul class="resource-list">
+        <li>
+          <strong>Ontology embedding survey</strong>
+          <span><a href="https://doi.org/10.1109/TKDE.2025.3573715">TKDE paper</a></span>
+        </li>
+        <li>
+          <strong>TransBox</strong>
+          <span><a href="https://doi.org/10.1145/3696410.3714723">WWW 2025 paper</a></span>
+        </li>
+        <li>
+          <strong>RegD</strong>
+          <span><a href="https://arxiv.org/abs/2501.17518">arXiv paper</a></span>
+        </li>
+        <li>
+          <strong>OnT</strong>
+          <span class="inline-links"><a href="https://arxiv.org/abs/2505.12905">paper</a><a href="https://github.com/HuiYang1997/OnT">code</a></span>
+        </li>
+        <li>
+          <strong>LLM4Proof</strong>
+          <span class="inline-links"><a href="https://arxiv.org/abs/2601.12444">paper</a><a href="https://github.com/HuiYang1997/LLMOwlR">code</a></span>
+        </li>
+        <li>
+          <strong>DeepOnto</strong>
+          <span><a href="https://github.com/KRR-Oxford/DeepOnto">GitHub repository</a></span>
+        </li>
+        <li>
+          <strong>BERTMap</strong>
+          <span><a href="https://doi.org/10.1609/aaai.v36i5.20498">AAAI 2022 paper</a></span>
+        </li>
+        <li>
+          <strong>BERTSubs</strong>
+          <span><a href="https://doi.org/10.1007/s11280-023-01148-0">World Wide Web Journal paper</a></span>
+        </li>
+        <li>
+          <strong>OWL2Vec*</strong>
+          <span class="inline-links"><a href="https://doi.org/10.1007/s10994-021-05997-6">paper</a><a href="https://github.com/KRR-Oxford/OWL2Vec-Star">code</a></span>
+        </li>
+        <li>
+          <strong>Concept placement</strong>
+          <span class="inline-links"><a href="https://doi.org/10.1007/978-3-031-60635-9_5">ESWC 2024 paper</a><a href="https://doi.org/10.1145/3583780.3615117">CIKM 2023 dataset paper</a></span>
+        </li>
+        <li>
+          <strong>ICON</strong>
+          <span><a href="https://doi.org/10.1145/3589334.3645473">WWW 2024 paper</a></span>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="page footer">
+    <p>OntoLM · Ontology Embedding, Reasoning and Construction with Language Models · ISWC 2026 Tutorial</p>
+  </footer>
+</body>
+</html>
