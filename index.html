@@ -355,26 +355,82 @@
     .speaker-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 30px;
+      gap: 34px;
     }
 
     .speaker {
-      padding: 18px 18px 0 0;
-      border-top: 1px solid var(--ink);
+      position: relative;
+      padding: 22px 0 0;
+      border-top: 1px solid var(--line);
     }
 
-    .speaker::before,
-    .material::before {
+    .speaker::after {
       content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 58px;
+      height: 2px;
+      background: var(--speaker-color, var(--accent));
+    }
+
+    .speaker-head {
+      min-height: 96px;
+      margin-bottom: 18px;
+    }
+
+    .person-mark {
       display: block;
-      width: 34px;
-      height: 4px;
-      margin-bottom: 16px;
-      background: linear-gradient(90deg, var(--accent), #9b7a55);
+      margin-bottom: 14px;
+      color: color-mix(in srgb, var(--speaker-color, var(--accent)) 62%, var(--muted));
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    .role-label {
+      display: inline-block;
+      margin-top: 8px;
+      color: var(--speaker-color, var(--accent));
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .role-tags,
+    .resource-tags {
+      display: none;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .role-tags span,
+    .resource-tags span {
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    .speaker.embedding {
+      --speaker-color: #23463c;
+      --item-color: #23463c;
+    }
+
+    .speaker.alignment {
+      --speaker-color: #8a6b43;
+      --item-color: #8a6b43;
+    }
+
+    .speaker.placement {
+      --speaker-color: #4d6678;
+      --item-color: #4d6678;
     }
 
     h3 {
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       font-size: 1.12rem;
       line-height: 1.3;
     }
@@ -386,20 +442,58 @@
     }
 
     .affiliation {
-      margin-bottom: 14px;
       color: var(--muted);
       font-weight: 600;
+      margin-bottom: 0;
     }
 
     .materials {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 36px;
+      gap: 34px;
     }
 
     .material {
-      padding-top: 18px;
+      position: relative;
+      padding: 22px 0 0 62px;
       border-top: 1px solid var(--line);
+    }
+
+    .material-icon {
+      position: absolute;
+      left: 0;
+      top: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      color: var(--item-color, var(--accent));
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .material-icon svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .material h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .material.resources {
+      --item-color: #23463c;
+    }
+
+    .material.tooling {
+      --item-color: #8a6b43;
     }
 
     .resource-list li:nth-child(odd) {
@@ -557,19 +651,31 @@
         <p class="lead">The tutorial is presented by researchers working at the intersection of ontologies, knowledge graphs, language models, and machine learning.</p>
       </div>
       <div class="speaker-grid">
-        <article class="speaker">
-          <h3><a href="https://huiyang1997.github.io/">Hui Yang</a></h3>
-          <p class="affiliation">The University of Manchester</p>
+        <article class="speaker embedding">
+          <div class="speaker-head">
+            <span class="person-mark" aria-hidden="true">01</span>
+            <h3><a href="https://huiyang1997.github.io/">Hui Yang</a></h3>
+            <p class="affiliation">The University of Manchester</p>
+            <span class="role-label">Embeddings and reasoning</span>
+          </div>
           <p>Postdoctoral researcher working on ontology embeddings, their combination with LMs, and ontology reasoning tasks. Hui will lead the sessions on geometric embeddings, LM-based embeddings, and complex ontology reasoning.</p>
         </article>
-        <article class="speaker">
-          <h3><a href="https://chenjiaoyan.github.io/">Jiaoyan Chen</a></h3>
-          <p class="affiliation">The University of Manchester</p>
+        <article class="speaker alignment">
+          <div class="speaker-head">
+            <span class="person-mark" aria-hidden="true">02</span>
+            <h3><a href="https://chenjiaoyan.github.io/">Jiaoyan Chen</a></h3>
+            <p class="affiliation">The University of Manchester</p>
+            <span class="role-label">Roadmap and alignment</span>
+          </div>
           <p>Senior Lecturer in Computer Science with extensive work on knowledge graphs, ontologies, and machine learning, including teaching and tutorial experience at ISWC and IJCAI.</p>
         </article>
-        <article class="speaker">
-          <h3><a href="https://experts.exeter.ac.uk/41644-hang-dong">Hang Dong</a></h3>
-          <p class="affiliation">The University of Exeter</p>
+        <article class="speaker placement">
+          <div class="speaker-head">
+            <span class="person-mark" aria-hidden="true">03</span>
+            <h3><a href="https://experts.exeter.ac.uk/41644-hang-dong">Hang Dong</a></h3>
+            <p class="affiliation">The University of Exeter</p>
+            <span class="role-label">Concept placement</span>
+          </div>
           <p>Lecturer in Computer Science working on knowledge graphs, NLP, language models, and health informatics. Hang will lead the session on new concept placement in ontologies.</p>
         </article>
       </div>
@@ -581,13 +687,19 @@
         <p class="lead">Slides, reading lists, code, datasets, notebooks, and a DeepOnto tutorial will be released openly according to the ISWC 2026 schedule.</p>
       </div>
       <div class="materials">
-        <div class="material">
-          <h3>Open resources</h3>
-          <p>The tutorial website will collect reading lists, slides, code repositories, datasets, and notebook-based demonstrations for ontology embedding and construction tasks. Current open-source resources include <a href="https://github.com/KRR-Oxford/DeepOnto">DeepOnto</a>, <a href="https://github.com/HuiYang1997/OnT">OnT</a>, <a href="https://github.com/HuiYang1997/LLMOwlR">LLM4Proof</a>, and <a href="https://github.com/KRR-Oxford/OWL2Vec-Star">OWL2Vec*</a>.</p>
+        <div class="material resources">
+          <div>
+            <span class="material-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 6h13a3 3 0 0 1 3 3v17H10a3 3 0 0 1-3-3V7a1 1 0 0 1 1-1Z"/><path d="M10 26V9a3 3 0 0 1 3-3"/><path d="M13 12h7M13 17h6"/></svg></span>
+            <h3>Open resources</h3>
+            <p>The tutorial website will collect reading lists, slides, code repositories, datasets, and notebook-based demonstrations for ontology embedding and construction tasks. Current open-source resources include <a href="https://github.com/KRR-Oxford/DeepOnto">DeepOnto</a>, <a href="https://github.com/HuiYang1997/OnT">OnT</a>, <a href="https://github.com/HuiYang1997/LLMOwlR">LLM4Proof</a>, and <a href="https://github.com/KRR-Oxford/OWL2Vec-Star">OWL2Vec*</a>.</p>
+          </div>
         </div>
-        <div class="material">
-          <h3>DeepOnto and OnT</h3>
-          <p>Planned materials include a comprehensive <a href="https://github.com/KRR-Oxford/DeepOnto">DeepOnto</a> tutorial and Python notebooks demonstrating <a href="https://github.com/HuiYang1997/OnT">OnT</a>. A survey paper will be linked when available.</p>
+        <div class="material tooling">
+          <div>
+            <span class="material-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 9h16v14H8z"/><path d="M12 13h8M12 18h5"/><path d="M22 5v5M10 27v-5"/><path d="M5 16h3M24 16h3"/></svg></span>
+            <h3>DeepOnto and OnT</h3>
+            <p>Planned materials include a comprehensive <a href="https://github.com/KRR-Oxford/DeepOnto">DeepOnto</a> tutorial and Python notebooks demonstrating <a href="https://github.com/HuiYang1997/OnT">OnT</a>. A survey paper will be linked when available.</p>
+          </div>
         </div>
       </div>
     </section>
