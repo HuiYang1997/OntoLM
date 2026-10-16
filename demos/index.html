@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hands-on Demos | OntoLM ISWC 2026 Tutorial</title>
+  <meta name="description" content="Two narrated hands-on demos of the OntoLM tutorial: OnT ontology embeddings and BERTSubs subsumption prediction with DeepOnto, with Colab notebooks.">
+  <style>
+    :root {
+      --ink: #1d2420;
+      --muted: #5e6862;
+      --soft: #eef1ee;
+      --line: #d8ddd9;
+      --paper: #ffffff;
+      --tint: #f7f8f6;
+      --accent: #23463c;
+      --accent-soft: #dfe8e4;
+      --max: 1100px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px; line-height: 1.6; }
+    a { color: var(--accent); }
+    .wrap { width: min(100% - 40px, var(--max)); margin: 0 auto; }
+    header { border-bottom: 1px solid var(--line); background: var(--tint); }
+    header .wrap { padding: 28px 0 24px; }
+    .back { font-size: 14px; text-decoration: none; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 10px 0 8px; letter-spacing: -0.01em; }
+    .lead { color: var(--muted); max-width: 70ch; margin: 0; }
+    main .wrap { padding: 32px 0 56px; display: grid; gap: 40px; }
+    .demo { display: grid; gap: 16px; }
+    .demo h2 { margin: 0; font-size: 24px; }
+    .demo .sub { margin: 0; color: var(--muted); }
+    video { width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; border: 1px solid var(--line); display: block; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line);
+      background: var(--paper); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn:hover { border-color: var(--accent); }
+    .btn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+    .steps { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+    .steps li { background: var(--soft); border-radius: 999px; padding: 3px 12px; font-size: 14px; }
+    .steps li.core { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    .meta { font-size: 14px; color: var(--muted); }
+    footer { border-top: 1px solid var(--line); }
+    footer .wrap { padding: 20px 0 32px; font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="back" href="../">← OntoLM tutorial (ISWC 2026)</a>
+      <h1>Hands-on demos</h1>
+      <p class="lead">Two short narrated walkthroughs of Part II. Each one runs a Colab notebook step by step on a small family ontology. Open the notebook to try it yourself.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="demo" id="ont" aria-labelledby="ont-title">
+        <h2 id="ont-title">OnT: train, then score</h2>
+        <p class="sub">Fine-tune a language model on an OWL ontology with <code>OntologyTransformer.fit()</code>, then score subsumption axioms C ⊑ D with <code>score_hierarchy()</code>.</p>
+        <video controls preload="metadata" playsinline poster="OnT_demo_poster.jpg">
+          <source src="OnT_demo.mp4" type="video/mp4">
+          Your browser cannot play this video. <a href="OnT_demo.mp4">Download the MP4</a>.
+        </video>
+        <ul class="steps" aria-label="Video chapters">
+          <li>Setup</li><li>Ontology</li><li class="core">1 · Fine-tune</li><li class="core">2 · Score</li><li>Before vs after</li><li>Parameters</li>
+        </ul>
+        <div class="row">
+          <a class="btn primary" href="https://colab.research.google.com/github/HuiYang1997/OnT/blob/main/notebooks/OnT_Quickstart.ipynb">Open in Colab</a>
+          <a class="btn" href="https://github.com/HuiYang1997/OnT/blob/main/notebooks/OnT_Quickstart.ipynb">Notebook on GitHub</a>
+          <span class="meta">3:38 · runs on the free Colab CPU</span>
+        </div>
+      </section>
+
+      <section class="demo" id="bertsubs" aria-labelledby="bert-title">
+        <h2 id="bert-title">BERTSubs with DeepOnto</h2>
+        <p class="sub">Call BERTSubs directly through <a href="https://krr-oxford.github.io/DeepOnto/">DeepOnto</a>: fine-tune BERT on the ontology's own subclass axioms, then read the probability of new ones.</p>
+        <video controls preload="metadata" playsinline poster="BERTSubs_demo_poster.jpg">
+          <source src="BERTSubs_demo.mp4" type="video/mp4">
+          Your browser cannot play this video. <a href="BERTSubs_demo.mp4">Download the MP4</a>.
+        </video>
+        <ul class="steps" aria-label="Video chapters">
+          <li>Setup</li><li>Ontology</li><li class="core">1 · Configure</li><li class="core">2 · Run</li><li class="core">3 · Read</li><li>Before vs after</li><li>Options</li>
+        </ul>
+        <div class="row">
+          <a class="btn primary" href="https://colab.research.google.com/github/HuiYang1997/OnT/blob/main/notebooks/BERTSubs_Quickstart.ipynb">Open in Colab</a>
+          <a class="btn" href="https://github.com/HuiYang1997/OnT/blob/main/notebooks/BERTSubs_Quickstart.ipynb">Notebook on GitHub</a>
+          <span class="meta">3:27 · use a Colab GPU runtime</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">Papers: Yang et al., <em>Language Models as Ontology Encoders</em>, ISWC 2025 (OnT) · Chen et al., <em>Contextual Semantic Embeddings for Ontology Subsumption Prediction</em>, World Wide Web Journal 2023 (BERTSubs).</div>
+  </footer>
+</body>
+</html>
