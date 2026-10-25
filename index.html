@@ -245,6 +245,45 @@
       font-size: 1.04rem;
     }
 
+    .download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 11px 20px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.04rem;
+      text-decoration: none;
+    }
+
+    .download:hover {
+      background: color-mix(in srgb, var(--accent) 82%, #000);
+    }
+
+    .download:focus-visible {
+      outline: 3px solid var(--accent-soft);
+      outline-offset: 2px;
+    }
+
+    .download svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .download small {
+      font-weight: 500;
+      font-size: .86rem;
+      opacity: .85;
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -601,7 +640,10 @@
     <section id="program" aria-labelledby="program-title">
       <div class="section-head">
         <h2 id="program-title">Program</h2>
-        <p class="lead">The tutorial is organized into two self-contained parts: ontology embeddings, followed by ontology reasoning and construction. Click a block to open its slides, or download <a href="slides/ontolm-all-slides.pdf">all slides in one PDF</a>.</p>
+        <div>
+          <p class="lead">The tutorial is organized into two self-contained parts: ontology embeddings, followed by ontology reasoning and construction. Click a block title to open its slides.</p>
+          <a class="download" href="slides/ontolm-all-slides.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download all slides <small>PDF · 212 pages</small></a>
+        </div>
       </div>
       <table class="program">
         <thead>
